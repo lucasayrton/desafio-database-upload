@@ -42,7 +42,11 @@ class TransactionsRepository extends Repository<Transaction> {
   }
 
   public async getTransactions(): Promise<ResponseAllTransactions> {
-    const transactions = await this.find();
+    const transactions = await this.find({
+      order: {
+        created_at: 'ASC',
+      },
+    });
     const balance = await this.getBalance();
 
     const response: ResponseAllTransactions = {
